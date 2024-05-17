@@ -5,6 +5,8 @@
 #include <vector>
 #include <string>
 
+
+#include "P6/MyVector.h"
 #define TINYOBJLOADER_IMPLEMENTATION
 #include "tiny_obj_loader.h"
 
