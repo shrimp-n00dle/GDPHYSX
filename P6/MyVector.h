@@ -18,66 +18,26 @@ namespace Physics {
 		//from zoom session
 		explicit operator glm::vec3() const { return glm::vec3(x, y, z); }
 
-		MyVector(float x, float y, float z)
-		{
-			this->x = x;
-			this->y = y;
-			this->z = z;
-		}
+		MyVector(float x, float y, float z){}
 
 		//Magnitude
-		void findMagnitude(float _x, float _y, float _z)
-		{
-			this->magnitude = sqrt((_x * _x) + (_y * _y) + (_z * _z));
-		}
+		void findMagnitude(float _x, float _y, float _z){}
 
 		//Direction
-		void findDirection(float magnitude, MyVector vector1) 
-		{
-			this->direction = glm::vec3(vector1.x / magnitude, vector1.y / magnitude, vector1.z / magnitude);
-		}
+		void findDirection(float magnitude, MyVector vector1) {}
 
 		//Basic Operations
-		void Add(MyVector vector) 
-		{
-			vector.x = vector.x + this->x;
-			vector.y = vector.y + this->y;
-			vector.z = vector.z + this->z;
-		}
-		void Subtract(MyVector vector)
-		{
-			vector.x = vector.x - this->x;
-			vector.y = vector.y - this->y;
-			vector.z = vector.z - this->z;
-		}
-		void Multiplication_scalar(MyVector vector, float scalarValue)
-		{
-			vector.x = vector.x + scalarValue;
-			vector.y = vector.y + scalarValue;
-			vector.z = vector.z + scalarValue;
-		}
+		void Add(MyVector vector) {}
+		void Subtract(MyVector vector){}
+		void Multiplication_scalar(MyVector vector, float scalarValue) {}
 
 		//Vector Products
-		void findComponentProduct(MyVector vector1, MyVector vector2)
-		{
-			this->x = vector1.x * vector2.x;
-
-			this->y = vector1.y * vector2.y;
-
-			this->z = vector1.z * vector2.z;
-		}
+		void findComponentProduct(MyVector vector1, MyVector vector2){}
 		void findScalarProduct(MyVector vector1, MyVector vector2)
-		{ 
-			findComponentProduct(vector1,vector2);
-			this->dot = this->x + this->y + this->z;
-		}
+		{}
 
 		void findVectorProduct(MyVector vector1, MyVector vector2)
-		{
-			this->x = (vector1.y * vector2.z) - (vector1.z * vector2.y);
-			this->y = (vector1.z * vector2.x) - (vector1.x * vector2.z);
-			this->z = (vector1.x * vector2.y) - (vector1.y * vector2.x);
-		}
+		{}
 
 		/*
 		MyVector() : x(0), y(0), z(0)
