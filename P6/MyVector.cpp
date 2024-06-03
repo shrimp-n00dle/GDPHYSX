@@ -1,6 +1,6 @@
 #include "MyVector.h"
 
-using namespace Physics;
+using namespace P6;
 
 
 MyVector::MyVector(float x, float y, float z)
@@ -23,23 +23,48 @@ void MyVector::findDirection(float magnitude, MyVector vector1)
 }
 
 //Basic Operations
-void MyVector::Add(MyVector vector)
+MyVector MyVector::operator+ (const MyVector vector)
 {
-	vector.x = vector.x + this->x;
-	vector.y = vector.y + this->y;
-	vector.z = vector.z + this->z;
+	return MyVector (this->x + vector.x,
+	this->y + vector.y,
+	this->z + vector.z);
 }
-void MyVector::Subtract(MyVector vector)
+
+MyVector MyVector::operator- (const MyVector vector)
 {
-	vector.x = vector.x - this->x;
-	vector.y = vector.y - this->y;
-	vector.z = vector.z - this->z;
+	return MyVector (this->x - vector.x,
+	this->y - vector.y,
+	this->z - vector.z);
 }
+
+MyVector MyVector::operator* (const MyVector vector)
+{
+	return MyVector (this->x * vector.x,
+	this->y * vector.y,
+	this->z * vector.z);
+
+	// return MyVector(vector.x * scalarValue,vector.y * scalarValue,vector.z * scalarValue);
+}
+
+float MyVector::operator* (float value)
+{
+	return this->product = this->product * value;
+
+	// return MyVector(vector.x * scalarValue,vector.y * scalarValue,vector.z * scalarValue);
+}
+
+
+// void MyVector::operator+= (const MyVector vector);
+// {
+// 	this->x = this->x + vector.x;
+// 	this->y = this->y + vector.y;
+// 	this->z = this->z + vector.z;
+// }
 void MyVector::Multiplication_scalar(MyVector vector, float scalarValue)
 {
-	vector.x = vector.x + scalarValue;
-	vector.y = vector.y + scalarValue;
-	vector.z = vector.z + scalarValue;
+	vector.x = vector.x * scalarValue;
+	vector.y = vector.y * scalarValue;
+	vector.z = vector.z * scalarValue;
 }
 
 //Vector Products
