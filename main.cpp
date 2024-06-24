@@ -7,12 +7,20 @@
 
 
 #include "P6/MyVector.h"
+#include "P6/Particle.h"
 #define TINYOBJLOADER_IMPLEMENTATION
 #include "tiny_obj_loader.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+
+#include <chrono>
+using namespace std::chrono_literals;
+//our time inbetween frames// 16ms for  1/60
+constexpr std::chrono::nanoseconds timestep(16ms);
+
+
 
 float x = 0.f,y = 0.f ,z = 0.f;
 glm::mat4 identity_matrix = glm::mat4(1.0f);
@@ -38,6 +46,17 @@ int main(void)
 
     float window_width = 600.f;
     float window_height = 600.f;
+
+    using clock = std::chrono::high_resolution_clock;
+    auto curr_time = clock::now();
+    auto prev_time = curr_time;
+    std::chrono::nanoseconds curr_ns(0);
+
+    P6::P6Particle particle = P6::P6Particle();
+
+    //this is 100m/s to the right
+    particle.velocity = P6::MyVector(100, 0, 0);
+    particle.acceleration = P6::MyVector(-30, 0, 0);
     /*
     //Create a 3x3 indentity matrix
     glm::mat3 identity_matrix3 = glm::mat3(1.0f);
@@ -253,6 +272,38 @@ int main(void)
     while (!glfwWindowShouldClose(window))
     {
 
+        //current time
+        curr_time = clock::now();
+
+        //check duration ibetween the last iteration
+        auto dur = std::chrono::duration_cast< std::chrono::nanoseconds> (curr_time - prev_time);
+
+        //set prev with current for the next iteration
+        prev_time = curr_time;
+
+
+
+        //add duartion since last iteration
+        //to the time since our last "frame"
+        curr_ns += dur;
+
+        if (curr_ns >= timestep)
+        {
+            //convert ns to ms
+            auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(curr_ns);
+
+            std::cout << "MS: " << (float)ms.count() << "\n";
+
+            curr_ns -= timestep;
+
+            //Reset
+           // curr_ns -= curr_ns;
+
+            //more updates here later
+            std::cout << "P6 Update" << std::endl;
+
+            particle.Update((float)ms.count() / 1000);
+        }
        // theta += 0.050f;
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);

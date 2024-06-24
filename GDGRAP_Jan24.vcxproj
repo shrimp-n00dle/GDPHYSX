@@ -142,9 +142,11 @@
     <ClCompile Include="glad.c" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="P6\MyVector.cpp" />
+    <ClCompile Include="P6\Particle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="P6\MyVector.h" />
+    <ClInclude Include="P6\Particle.h" />
     <ClInclude Include="tiny_obj_loader.h" />
   </ItemGroup>
   <ItemGroup>
