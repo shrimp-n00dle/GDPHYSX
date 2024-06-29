@@ -3,7 +3,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "MyVector.h"
+#include "VectorClass.h"
 
 //1 unit = 1m
 //1m = 1 px
@@ -13,26 +13,23 @@ namespace P6
 	class P6Particle
 	{
 	public:
-		MyVector position, velocity, acceleration;//glm::vec3 position;
+		VectorClass position, velocity, acceleration;
 		float mass = 0;
-		//glm::vec3 velocity, acceleration;
 
 	public:
 		P6Particle();
+		P6Particle(VectorClass position, VectorClass velocity, VectorClass acceleration);
 
 	protected:
-		void updatePosition(float time)
-		{
-			this->position = this->position + (this->velocity * time) + ((this->acceleration * time * time) * (1.0f / 2.0f));
-		}
-		void updateVelocity(float time) {}
+		//Update particle position relative to time
+		void updatePosition(float time);
+		
+		//Update particle velocity relative to time
+		void updateVelocity(float time);
 
 	public:
-		void Update(float time)
-		{
-			this->updatePosition(time);
-			updateVelocity(time);
-		}
+		//Updates particle using given time
+		void Update(float time);
 
 	};
 }

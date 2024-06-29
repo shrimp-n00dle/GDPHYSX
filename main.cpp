@@ -6,7 +6,7 @@
 #include <string>
 
 
-#include "P6/MyVector.h"
+#include "P6/VectorClass.h"
 #include "P6/Particle.h"
 #define TINYOBJLOADER_IMPLEMENTATION
 #include "tiny_obj_loader.h"
@@ -55,8 +55,10 @@ int main(void)
     P6::P6Particle particle = P6::P6Particle();
 
     //this is 100m/s to the right
-    particle.velocity = P6::MyVector(100, 0, 0);
-    particle.acceleration = P6::MyVector(-30, 0, 0);
+    particle.velocity = P6::VectorClass(100, 0, 0);
+
+    //Acceleration is -30 m/s2 to the left
+    particle.acceleration = P6::VectorClass(-30, 0, 0);
     /*
     //Create a 3x3 indentity matrix
     glm::mat3 identity_matrix3 = glm::mat3(1.0f);
@@ -83,9 +85,6 @@ int main(void)
         glfwTerminate();
         return -1;
     }
-
- 
-
 
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
@@ -293,11 +292,10 @@ int main(void)
             auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(curr_ns);
 
             std::cout << "MS: " << (float)ms.count() << "\n";
-
             curr_ns -= timestep;
 
             //Reset
-           // curr_ns -= curr_ns;
+            //curr_ns -= curr_ns;
 
             //more updates here later
             std::cout << "P6 Update" << std::endl;
