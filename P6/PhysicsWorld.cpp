@@ -43,8 +43,7 @@ void PhysicsWorld::Update(float time)
     //Only Call Resolve Contactcs when there are contacts
     if (Contacts.size() > 0)
     {
-        //std::cout << "Call Resolve Contacts here" << std::endl;
-        //contactResolver.ResolveContacts(Contacts,true);
+        contactResolver.ResolveContacts(Contacts,true);
     }
 }
 

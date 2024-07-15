@@ -5,41 +5,36 @@ using namespace P6;
 
 ContactResolver::ContactResolver(unsigned _maxIterations) : max_iterations(_maxIterations) {}
 
-//void ContactResolver::ResolveContacts(std::vector<ParticleContact*> contacts, float time)
-//{
+void ContactResolver::ResolveContacts(std::vector<P6::ParticleContact*> contacts, float time)
+{
 
-    //current_iterations = 0;
-   //float max_depth = contacts[0]->depth;
+    current_iterations = 0;
 
-    // while()
-    // {
+    while(current_iterations < max_iterations)
+    {
+        unsigned current_index = 0;
+        float curr_min = contacts[0]->GetSeparatingSpeed();
+        float max_depth = contacts[0]->depth;
 
-    // }
-    // if (ss < curr_min && (ss < 0 || 0 < contacts[1]->depth))
-    // {
-    //     current_index = 1;
+        for (int i = 1; i < contacts.size(); i++)
+        {
+            float ss = contacts[i]->GetSeparatingSpeed();
 
-    //     curr_min = ss;
+             if (ss < curr_min && (ss < 0 || 0 < contacts[i]->depth))
+            {
+                current_index = 1;
+                curr_min = ss;
 
-    //     if (max_depth < contacts[i]->depth)
-    //     {
-    //         max_depth = contacts[i]->depth;
-    //     }
+                 if (max_depth < contacts[i]->depth) max_depth = contacts[i]->depth;
 
+            }
 
-    //     //outside for loop
+    }
 
-    //     if (curr_min >= 0 && max_depth <= 0)
-    //     {
-    //         return;
-    //     }
-
-    //     contacts[curentlocindex]->Resolved(time);
-    //     current_iterations++;
-    // }
-    // //You can loop thru std::vector class by doing something similar to this
-    // for (unsigned i = 0; i < contacts.size(); i++)
-    // {
+        if (curr_min >= 0 && max_depth <= 0) return;
         
-    // }
-//}
+
+        contacts[current_index]->Resolve(time);
+        current_iterations++;
+    }
+}

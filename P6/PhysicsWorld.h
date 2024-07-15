@@ -5,6 +5,8 @@
 #include "GravityForceGenerator.h"
 #include "ParticleContact.h"
 #include "ParticleLink.h"
+#include "ContactResolver.h"
+
 
 #include <vector>
 

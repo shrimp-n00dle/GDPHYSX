@@ -1,6 +1,5 @@
 #pragma once
 #include "P6Particle.h"
-#include "ContactResolver.h"
 
 
 namespace P6
@@ -24,9 +23,10 @@ namespace P6
         //Resolve this contact
         void Resolve(float time);
 
-        protected:
         //Get the separating speed
         float GetSeparatingSpeed();
+
+        protected:
         //Calculates the new velocities of the objects
         void ResolveVelocity(float time);
 
