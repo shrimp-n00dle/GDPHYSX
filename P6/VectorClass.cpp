@@ -16,9 +16,19 @@ VectorClass VectorClass::operator+ (const VectorClass vector)
     return VectorClass (this->x + vector.x,this->y + vector.y,this->z + vector.z);
 }
 
+VectorClass VectorClass::operator+= (const VectorClass vector)
+{
+    return VectorClass (this->x += vector.x,this->y += vector.y,this->z += vector.z);
+}
+
 VectorClass VectorClass::operator- (const VectorClass vector)
 {
     return VectorClass (this->x - vector.x,this->y - vector.y,this->z - vector.z);
+}
+
+VectorClass VectorClass::operator+= (const VectorClass vector)
+{
+    return VectorClass (this->x -= vector.x,this->y -= vector.y,this->z -= vector.z);
 }
 
 VectorClass VectorClass::operator* (const VectorClass vector)
@@ -57,4 +67,10 @@ VectorClass VectorClass::findDirection(const VectorClass vector)
     this->z = vector.z / this->magnitude;
 
     return VectorClass(this->x,this->y,this->z);
+}
+
+float VectorClass::findDotProduct(const VectorClass vector, const VectorClass vector2)
+{
+    this->dot = (vector.x * vector2.x) + (vector.y * vector2.y) + (vector.z * vector2.z);
+    return this->dot;
 }

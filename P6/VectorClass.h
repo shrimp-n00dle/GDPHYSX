@@ -4,15 +4,15 @@
 #include <glm/gtc/type_ptr.hpp>
 
 
-
 namespace P6 {
     class VectorClass
     {
-    private:
+    public:
         float x,y,z;
         float velocity,force;
         glm::vec3 position;
         float magnitude = 1.0f;
+        float dot = 0.0f;
     public:
         VectorClass(float x, float y, float z);
         VectorClass();
@@ -23,19 +23,19 @@ namespace P6 {
 
         //addition
         VectorClass operator+ (const VectorClass vector);
+        VectorClass operator+= (const VectorClass vector);
 
         //subtraction
         VectorClass operator- (const VectorClass vector);
+        VectorClass operator-= (const VectorClass vector);
 
         //basic multipilcation
         VectorClass operator* (const VectorClass vector);
         VectorClass operator* (float value);
 
+
         //scalar multipilcation
         VectorClass scalarMultiplication (const VectorClass vector, float value);
-
-
-
 
         /*Magnitude and Direction*/
 
@@ -49,7 +49,8 @@ namespace P6 {
 
         //component
 
-        //scalar
+        //scalar / dot
+        float findDotProduct(const VectorClass vector, const VectorClass vector2);
 
         //vector
     };

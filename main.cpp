@@ -7,7 +7,13 @@
 
 
 #include "P6/VectorClass.h"
-#include "P6/Particle.h"
+#include "P6/P6Particle.h"
+#include "P6/PhysicsWorld.h"
+#include "P6/DragForceGenerator.h"
+#include "P6/GravityForceGenerator.h"
+#include "P6/Springs/AnchoredSpring.h"
+#include "P6/Springs/ParticleSpring.h"
+#include "P6/Rod.h"
 #define TINYOBJLOADER_IMPLEMENTATION
 #include "tiny_obj_loader.h"
 
@@ -16,6 +22,8 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include <chrono>
+
+//TO DO : Also put the needed shaders and fragments in individual classes AND Review GRAP AGAIN
 using namespace std::chrono_literals;
 //our time inbetween frames// 16ms for  1/60
 constexpr std::chrono::nanoseconds timestep(16ms);
@@ -52,13 +60,81 @@ int main(void)
     auto prev_time = curr_time;
     std::chrono::nanoseconds curr_ns(0);
 
+    //Create an instance of our physics world
+    P6::PhysicsWorld pWorld = P6::PhysicsWorld();
     P6::P6Particle particle = P6::P6Particle();
-
+    P6::P6Particle particle2 = P6::P6Particle();
+    //std::list<RenderParticle*> RenderParticles;
+    P6::DragForceGenerator drag = P6::DragForceGenerator(0.14,0.1);
+    pWorld.forceRegistry.Add(&particle, &drag);
+    particle.position = P6::VectorClass(150,0,0);
+    //In KG
+    particle.mass = 1;
+    //Around (0,6000,0) KG m / s^2
+    particle.AddForce(P6::VectorClass(0,6000,0));
     //this is 100m/s to the right
     particle.velocity = P6::VectorClass(100, 0, 0);
-
     //Acceleration is -30 m/s2 to the left
     particle.acceleration = P6::VectorClass(-30, 0, 0);
+    pWorld.AddParticle(&particle);
+
+
+    particle2.position = P6::VectorClass(50,0,0);
+    particle2.mass = 5;
+    particle2.AddForce(P6::VectorClass(0,6000,0));
+    //this is 100m/s to the right
+    particle2.velocity = P6::VectorClass(50, 0, 0);
+    //Acceleration is -30 m/s2 to the left
+    particle2.acceleration = P6::VectorClass(-30, 0, 0);
+    pWorld.AddParticle(&particle2);
+
+    particle.AddForce(P6::VectorClass(0.0,1.0f,0.0f) * 500000);
+
+    P6::Rod* r = new P6::Rod();
+    r->particles[0] = &particle;
+    r->particles[1] = &particle2;
+    r->length = 200;
+
+    pWorld.Links.push_back(r);
+
+    P6::ParticleSpring pS = P6::ParticleSpring(&particle,5,1);
+    pWorld.forceRegistry.Add(&particle2,&pS);
+
+    P6::ParticleSpring pS2 = P6::ParticleSpring(&particle2,5,1);
+    pWorld.forceRegistry.Add(&particle,&pS2);
+
+    //turn off gravity for now
+    P6::GravityForceGenerator Gravity = P6::GravityForceGenerator(P6::VectorClass(0,0,0));
+
+    //Manually create  objs with ff paramters
+    P6::ParticleContact contact = P6::ParticleContact();
+    contact.particles[0] = &particle;
+    contact.particles[1] = &particle2;
+
+    contact.contactNormal = particle.position - particle2.position;
+    contact.contactNormal = contact.contactNormal.findDirection(contact.contactNormal);
+    contact.restitution = 1;
+
+    particle.velocity = P6::VectorClass(-30,0,0);
+    particle2.velocity = P6::VectorClass(30,0,0);
+
+    P6::VectorClass dir = particle.position - particle2.position;
+    dir.findDirection(dir);
+
+    //You can now add contatcs similar to the one below
+    pWorld.AddContact(&particle, &particle2, 1, dir);
+
+    //Create spring anchored to  20,0 of the physics world
+    //with a constant of 5 and rest length of 0.5m
+    P6::AnchoredSpring aSpring = P6::AnchoredSpring(P6::VectorClass(20,0,0),5,0.5);
+    //Connect the spring to a particle and
+    pWorld.forceRegistry.Add(&particle2,&aSpring);
+
+
+
+
+    //Renderline line here
+
     /*
     //Create a 3x3 indentity matrix
     glm::mat3 identity_matrix3 = glm::mat3(1.0f);
@@ -300,7 +376,11 @@ int main(void)
             //more updates here later
             std::cout << "P6 Update" << std::endl;
 
-            particle.Update((float)ms.count() / 1000);
+            //Update of physics world
+            pWorld.Update((float)ms.count() / 1000);
+            //testing contact resolver here
+            contact.Resolve((float)ms.count() / 1000);
+
         }
        // theta += 0.050f;
         /* Render here */
