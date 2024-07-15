@@ -19,6 +19,13 @@ namespace P6
 		float damping = 0.9f;
 		VectorClass position, velocity, acceleration;
 		float mass = 0;
+
+		//size of particle
+		float radius = 1.0f;
+
+		//how bouncy the particle is
+		float restitution = 1.0f;
+		
 	protected:
 		/*force accumulated by the particle the entire time*/
 		VectorClass accumulatedForce = VectorClass(0,0,0);

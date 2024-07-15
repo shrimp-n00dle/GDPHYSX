@@ -43,7 +43,8 @@ void PhysicsWorld::Update(float time)
     //Only Call Resolve Contactcs when there are contacts
     if (Contacts.size() > 0)
     {
-        contactResolver.ResolveContacts(Contacts,true);
+        //std::cout << "Call Resolve Contacts here" << std::endl;
+        //contactResolver.ResolveContacts(Contacts,true);
     }
 }
 
@@ -57,7 +58,7 @@ void PhysicsWorld::UpdateParticleList()
     );
 }
 
-void PhysicsWorld::AddContact(P6Particle* p1, P6Particle* p2, float restitution, VectorClass contactNormal)
+void PhysicsWorld::AddContact(P6Particle* p1, P6Particle* p2, float restitution, VectorClass contactNormal, float depth)
 {
 
     //Create a Particle Contact
@@ -66,8 +67,10 @@ void PhysicsWorld::AddContact(P6Particle* p1, P6Particle* p2, float restitution,
     //Assign the needed variables and values
     toAdd->particles[0] = p1;
     toAdd->particles[1] = p2;
+
     toAdd->restitution = restitution;
     toAdd->contactNormal = contactNormal;
+    toAdd->depth = depth;
 
     //Similar to a list you can just call push_back
     Contacts.push_back(toAdd);
@@ -77,6 +80,9 @@ void PhysicsWorld::GenerateContacts()
 {
     //clear the current list of contatcs
     Contacts.clear();
+
+    //check overlaps here
+    GetOverlaps();
 
     //iterate through the list of links
     for (std::list<ParticleLink*>::iterator i = Links.begin();
@@ -91,4 +97,47 @@ void PhysicsWorld::GenerateContacts()
                 Contacts.push_back(contact);
             }
         }
+}
+
+void PhysicsWorld::GetOverlaps()
+{
+    //iterate thru the list unto the 2nd to the last element
+    //eg ABCD, it will go to A-C
+    for (int i = 0; i < Particles.size() - 1; i++)
+    {
+        //access element at index i llike this=>Particles[i]
+        std::list<P6Particle*>::iterator a = std::next(Particles.begin(),i);
+
+
+        for(int h = i + 1; h < Particles.size(); h++)
+        {
+            std::list<P6Particle*>::iterator b = std::next(Particles.begin(),h);
+
+            //Get the vector A -> B
+            VectorClass mag2Vector = (*a)->position - (*b)->position;
+
+            //it its the prev step b4 magnitude, google it X2 + y2 + z2
+            float mag2 = mag2Vector.findSqMagnitude(mag2Vector.x,mag2Vector.y);
+
+            //get the sum
+            float rad = (*a)->radius + (*b)->radius;
+
+            float rad2 = rad * rad;
+
+            if (mag2 <= rad2)
+            {
+                VectorClass dir = mag2Vector.findDirection(mag2Vector);
+
+                //get depth of collision
+                float r = rad2 - mag2;
+                float depth = sqrt(r);
+
+                //use lower restitution of the 2
+                float restitution = fmin((*a)->restitution, (*b)->restitution);
+
+                //add contact
+                AddContact(*a,*b,restitution,dir,depth);
+            }
+        }
+    }
 }

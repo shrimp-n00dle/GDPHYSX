@@ -8,7 +8,7 @@ namespace P6
     {
         private:
         //Acceleration due to gravity
-        VectorClass Gravity = MyVector(0,-9.8,0);
+        VectorClass Gravity = VectorClass(0,-9.8,0);
 
         public:
         //Constructor

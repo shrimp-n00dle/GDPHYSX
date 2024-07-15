@@ -26,7 +26,7 @@ VectorClass VectorClass::operator- (const VectorClass vector)
     return VectorClass (this->x - vector.x,this->y - vector.y,this->z - vector.z);
 }
 
-VectorClass VectorClass::operator+= (const VectorClass vector)
+VectorClass VectorClass::operator-= (const VectorClass vector)
 {
     return VectorClass (this->x -= vector.x,this->y -= vector.y,this->z -= vector.z);
 }
@@ -57,6 +57,12 @@ VectorClass VectorClass::operator* (float value)
 float VectorClass::findMagnitude(float x, float y)
 {
     this->magnitude = sqrt((x * x) + (y * y));
+    return this->magnitude;
+}
+
+float VectorClass::findSqMagnitude(float x, float y)
+{
+     this->magnitude = (x * x) + (y * y);
     return this->magnitude;
 }
 

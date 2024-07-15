@@ -2,6 +2,7 @@
 #include "P6Particle.h"
 #include "ContactResolver.h"
 
+
 namespace P6
 {
     class ParticleContact

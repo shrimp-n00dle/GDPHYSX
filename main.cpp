@@ -6,14 +6,26 @@
 #include <string>
 
 
-#include "P6/VectorClass.h"
-#include "P6/P6Particle.h"
-#include "P6/PhysicsWorld.h"
-#include "P6/DragForceGenerator.h"
-#include "P6/GravityForceGenerator.h"
+
 #include "P6/Springs/AnchoredSpring.h"
 #include "P6/Springs/ParticleSpring.h"
+
+#include "P6/ContactResolver.h"
+
+#include "P6/DragForceGenerator.h"
+#include "P6/ForceGenerator.h"
+#include "P6/ForceRegistry.h"
+#include "P6/GravityForceGenerator.h"
+
+#include "P6/P6Particle.h"
+#include "P6/ParticleContact.h"
+#include "P6/ParticleLink.h"
+#include "P6/PhysicsWorld.h"
+
+#include "P6/Renderline.h"
 #include "P6/Rod.h"
+#include "P6/VectorClass.h"
+
 #define TINYOBJLOADER_IMPLEMENTATION
 #include "tiny_obj_loader.h"
 
@@ -122,7 +134,7 @@ int main(void)
     dir.findDirection(dir);
 
     //You can now add contatcs similar to the one below
-    pWorld.AddContact(&particle, &particle2, 1, dir);
+    pWorld.AddContact(&particle, &particle2, 1, dir, 0);
 
     //Create spring anchored to  20,0 of the physics world
     //with a constant of 5 and rest length of 0.5m

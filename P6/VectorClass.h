@@ -41,6 +41,7 @@ namespace P6 {
 
         //magnitude
         float findMagnitude(float x, float y);
+        float findSqMagnitude(float x, float y);
 
         //direction
         VectorClass findDirection(const VectorClass vector);

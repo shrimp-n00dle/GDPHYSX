@@ -35,7 +35,7 @@ namespace P6
         void Update(float time);
 
         //Function to easily add conacts
-        void AddContact(P6Particle* p1, P6Particle* p2, float restitution, VectorClass contactNormal);
+        void AddContact(P6Particle* p1, P6Particle* p2, float restitution, VectorClass contactNormal, float depth);
 
 	    private:
 		//Function that will check the list for any particles neededto be removed from simulation
@@ -50,6 +50,9 @@ namespace P6
         
         //Set arbitrary default num for max number of resolve calls
         ContactResolver contactResolver = ContactResolver(20);
+
+        //Get contacts that overlap
+        void GetOverlaps();
     };
     
 } // namespace name

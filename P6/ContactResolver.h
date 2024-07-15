@@ -14,7 +14,7 @@ namespace P6
         ContactResolver(unsigned _maxIterations);
 
         //reolve all assigned contacts
-        void ResolveContacts(std::vector<ParticleContact*> contacts, float time);
+        //void ResolveContacts(std::vector<ParticleContact*> contacts, float time);
 
         protected:
             //Current number of Resolve calls

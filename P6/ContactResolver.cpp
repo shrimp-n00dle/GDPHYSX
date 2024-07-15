@@ -5,11 +5,11 @@ using namespace P6;
 
 ContactResolver::ContactResolver(unsigned _maxIterations) : max_iterations(_maxIterations) {}
 
-void ContactResolver::ResolveContacts(std::vector<ParticleContact*> contacts, float time)
-{
+//void ContactResolver::ResolveContacts(std::vector<ParticleContact*> contacts, float time)
+//{
 
-    current_iterations = 0;
-    float max_depth = contacts[0]->depth;
+    //current_iterations = 0;
+   //float max_depth = contacts[0]->depth;
 
     // while()
     // {
@@ -42,4 +42,4 @@ void ContactResolver::ResolveContacts(std::vector<ParticleContact*> contacts, fl
     // {
         
     // }
-}
+//}

@@ -14,14 +14,14 @@ void DragForceGenerator::UpdateForce(P6Particle* particle, float time)
     VectorClass currV = particle->velocity;
 
     //Get magnitude
-    float mag = currV.findMagnitude();
+    float mag = currV.findMagnitude(currV.x,currV.y);
 
     //if magnitude is <= 0, do nothing
     if (mag <= 0) return;
 
     float dragF = (k1 * mag) + (k2 * mag);
     //Get direction of velocity
-    VectorClass dir = currV.Normalize();
+    VectorClass dir = currV.findDirection(currV);
 
     //Apply force using to the opposite direction
     particle->AddForce(dir * -dragF);
