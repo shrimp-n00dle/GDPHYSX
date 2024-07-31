@@ -1,6 +1,6 @@
 #include "Renderline.h"
 
-Renderline::Renderline(P6::VectorClass p1, P6::VectorClass p2, P6::VectorClass color) : P1(p1), P2(p2), Color(color){}
+Renderline::Renderline(P6::VectorClass p1, P6::VectorClass p2, glm::vec4 color) : P1(p1), P2(p2), Color(color){}
 
 
 void Renderline::Update(P6::VectorClass p1, P6::VectorClass p2, glm::mat4 projectionMatrix)

@@ -141,6 +141,10 @@
   <ItemGroup>
     <ClCompile Include="glad.c" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Model\Model3D.cpp" />
+    <ClCompile Include="Model\ModelManager.cpp" />
+    <ClCompile Include="Model\Shader.cpp" />
+    <ClCompile Include="P6\Cable.cpp" />
     <ClCompile Include="P6\ContactResolver.cpp" />
     <ClCompile Include="P6\DragForceGenerator.cpp" />
     <ClCompile Include="P6\ForceGenerator.cpp" />
@@ -159,6 +163,10 @@
     <ClCompile Include="P6\VectorClass.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Model\Model3D.h" />
+    <ClInclude Include="Model\ModelManager.h" />
+    <ClInclude Include="Model\Shader.h" />
+    <ClInclude Include="P6\Cable.h" />
     <ClInclude Include="P6\ContactResolver.h" />
     <ClInclude Include="P6\DragForceGenerator.h" />
     <ClInclude Include="P6\ForceGenerator.h" />

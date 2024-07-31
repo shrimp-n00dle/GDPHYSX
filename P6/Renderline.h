@@ -15,9 +15,9 @@ class Renderline
     P6::VectorClass P1,P2;
     glm::mat4 ProjectionMatrix;
 
-    P6::VectorClass Color;
+    glm::vec4 Color;
 
-    Renderline(P6::VectorClass p1, P6::VectorClass p2, P6::VectorClass color);
+    Renderline(P6::VectorClass p1, P6::VectorClass p2, glm::vec4 color);
 
     void Update(P6::VectorClass p1, P6::VectorClass p2, glm::mat4 projectionMatrix);
 
